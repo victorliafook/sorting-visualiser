@@ -1,0 +1,21 @@
+{
+  "name": "sorting-visualizer",
+  "version": "1.0.0",
+  "description": "step-by-step visualization of sorting algorithms for educational purposes",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine",
+    "serve": "browser-sync start --server",
+    "build": "webpack --mode=production"
+  },
+  "author": "Victor Pessoa de Azevedo Lia Fook",
+  "license": "MIT",
+  "devDependencies": {
+    "browser-sync": "^2.27.5",
+    "webpack": "^5.58.2",
+    "webpack-cli": "^4.9.1"
+  },
+  "dependencies": {
+    "p5": "^1.4.0"
+  }
+}
