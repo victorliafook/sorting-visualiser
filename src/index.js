@@ -1,7 +1,7 @@
 const p5 = require("p5");
 const canvasWidth = 800;
 const canvasHeight = 400;
-const visualizerAreaId = "visualizer-area";
+const visualizerAreaId = "visualiser-area";
 
 const visualizerSketch = new p5((sketch) => {
     sketch.setup = () => {
