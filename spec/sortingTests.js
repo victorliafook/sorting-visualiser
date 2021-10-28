@@ -14,7 +14,9 @@ const createRandomTestCase = (arrayLength) => {
   const arrayInput = [];
   for (let i = 0; i < arrayLength; i++) {
     let num = Math.floor(Math.random() * (MAX_VALUE + 1));
-    arrayInput.push(num);
+    //we dont want to have -0 on the test cases as they mess up Jasmine's toEqual matcher
+    let sign = Math.floor(Math.random() * 2) === 0 && num !== 0 ? 1 : -1;
+    arrayInput.push(sign * num);
   }
 
   testCase.arrayInput = arrayInput;
