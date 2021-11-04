@@ -1,16 +1,28 @@
 const p5 = require("p5");
-const canvasWidth = 800;
-const canvasHeight = 400;
+const Drawing = require('../src/ui/drawing');
+const SketchFactory = require('../src/ui/sketchFactory');
+const Board = require("./ui/drawable/board");
+const Card = require("./ui/drawable/card");
+
 const visualizerAreaId = "visualiser-area";
+const config = {
+    canvasDimensions: {
+        width: 800,
+        height: 400
+    }
+};
 
-const visualizerSketch = new p5((sketch) => {
-    sketch.setup = () => {
-        sketch.createCanvas(canvasWidth, canvasHeight);
-    };
+const sketchFactory = new SketchFactory(config);
+const drawing = new Drawing();
+const board = new Board(800, 400);
+for(let i = 0; i < 8; i++) {
+    board.addCard(new Card());
+}
+drawing.add(board);
 
-    sketch.draw = () => {
-        sketch.background(0);
-        sketch.fill(50);
-        sketch.rect(50, 50, 50, 50);
-    };
-}, visualizerAreaId);
+sketchFactory.setDrawing(drawing);
+const visualizerSketch = new p5(sketchFactory.getSketch(), visualizerAreaId);
+
+/**
+ * draw: for each drawable, update() and draw()
+ */
