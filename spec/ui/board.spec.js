@@ -34,6 +34,6 @@ describe('Board specs', function() {
     board.addCard(card2);
 
     expect(card1.setPosition).toHaveBeenCalledWith(5, 5);
-    expect(card2.setPosition).toHaveBeenCalledWith(35, 5);
+    expect(card2.setPosition).toHaveBeenCalledWith(40, 5);
   });
 });

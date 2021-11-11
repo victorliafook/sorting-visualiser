@@ -14,9 +14,9 @@ const config = {
 
 const sketchFactory = new SketchFactory(config);
 const drawing = new Drawing();
-const board = new Board(800, 400);
-for(let i = 0; i < 8; i++) {
-    board.addCard(new Card());
+const board = new Board(600, 100);
+for(let i = 0; i < 16; i++) {
+    board.addCard(new Card(null, 30, i % 4, Math.floor(Math.random() * (13 + 1)) + 2));
 }
 drawing.add(board);
 
