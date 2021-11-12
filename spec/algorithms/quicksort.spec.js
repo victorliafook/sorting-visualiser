@@ -1,6 +1,6 @@
-const quicksort = require("../algorithms/quicksort");
-const { buildKeyedArray } = require("./testHelper");
-const { getRandomTestCases, getEdgeCases } = require("./sortingTests");
+const quicksort = require("../../src/algorithms/quicksort");
+const { buildKeyedArray } = require("../testHelper");
+const { getRandomTestCases, getEdgeCases } = require("../sortingTests");
 
 describe('Quicksort tests', function() {
   it("sorts ascending - random tests", function() {

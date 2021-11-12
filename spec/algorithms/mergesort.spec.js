@@ -1,6 +1,6 @@
-const mergesort = require("../algorithms/mergesort");
-const { getKeyedObj, buildKeyedArray } = require("./testHelper");
-const { getRandomTestCases, getEdgeCases } = require("./sortingTests");
+const mergesort = require("../../src/algorithms/mergesort");
+const { getKeyedObj, buildKeyedArray } = require("../testHelper");
+const { getRandomTestCases, getEdgeCases } = require("../sortingTests");
 
 describe("Mergesort tests", function() {  
   it("sorts ascending", function() {
