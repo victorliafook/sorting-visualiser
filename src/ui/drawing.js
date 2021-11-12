@@ -3,6 +3,7 @@ const Drawing = function() {
   
   const draw = function() {
     drawingsSet.forEach(drawing => {
+      drawing.update();
       drawing.draw(this);
     });
   };

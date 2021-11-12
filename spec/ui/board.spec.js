@@ -2,6 +2,12 @@ const Board = require("../../src/ui/drawable/board");
 const Card = require("../../src/ui/drawable/card");
 
 describe('Board specs', function() {
+  it('implements Drawable', function() {
+    const board = new Board();
+    board.update();
+    board.draw(getP5ClosureMock());
+  });
+
   it('draws its cards when drawing itself', function() {
     const board = new Board();
 
@@ -36,4 +42,15 @@ describe('Board specs', function() {
     expect(card1.setPosition).toHaveBeenCalledWith(5, 5);
     expect(card2.setPosition).toHaveBeenCalledWith(40, 5);
   });
+
+  const getP5ClosureMock = () => {
+    return {
+      stroke: () => {},
+      fill: () => {},
+      rect: () => {},
+      text: () => {},
+      textSize: () => {},
+      textAlign: () => {}
+    };
+  };
 });

@@ -7,6 +7,19 @@ const {
 } = {...Card()};
 
 describe('Card specs', function() {
+  it('implements Drawable', function() {
+    const card = new Card({});
+    card.update();
+    card.draw(getP5ClosureMock());
+  });
+
+  it('implements Rankable', function() {
+    const rank = getRandomRank();
+    const card = new Card({}, 30, 0, rank);
+    
+    expect(card.getRank()).toEqual(rank);
+  });
+
   it('draws base card correctly', function() {
     const position = {
       x: 50,
@@ -15,15 +28,7 @@ describe('Card specs', function() {
     const width = 30;
     const card = new Card(position, width);
     
-    const p5Closure = {
-      stroke: () => {},
-      fill: () => {},
-      rect: () => {},
-      text: () => {},
-      textSize: () => {},
-      textAlign: () => {}
-    };
-
+    const p5Closure = getP5ClosureMock();
     spyOn(p5Closure, 'stroke');
     spyOn(p5Closure, 'fill');
     spyOn(p5Closure, 'rect');

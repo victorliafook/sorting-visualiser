@@ -25,6 +25,10 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
     closure.text(rank, position.x + width * 0.9, position.y + height - cardPadding);
   };
 
+  const update = () => {
+
+  };
+
   const getWidth = () => {
     return width;
   }
@@ -32,6 +36,10 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
   const setPosition = (x, y) => {
     position.x = x;
     position.y = y;
+  };
+
+  const getRank = () => {
+    return rank;
   };
 
   const getSuitFillColour = (suit) => {
@@ -47,6 +55,8 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
 
   return {
     draw,
+    update,
+    getRank,
     getWidth,
     setPosition,
     SUIT_HEARTS,

@@ -18,6 +18,10 @@ const Board = function(width, height) {
     })
   }
 
+  const update = () => {
+
+  };
+
   const addCard = (card) => {
     let xPosition = (cards.length + 1) * padding + cards.length * card.getWidth();
     card.setPosition(xPosition, padding);
@@ -26,6 +30,7 @@ const Board = function(width, height) {
 
   return {
     draw,
+    update,
     addCard
   }
 }
