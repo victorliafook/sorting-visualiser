@@ -19,12 +19,14 @@ const Board = function(width, height) {
   }
 
   const update = () => {
-
+    cards.forEach(card => {
+      card.update();
+    })
   };
 
   const addCard = (card) => {
     let xPosition = (cards.length + 1) * padding + cards.length * card.getWidth();
-    card.setPosition(xPosition, padding);
+    card.setPosition({x: xPosition, y: padding});
     cards.push(card);
   };
 

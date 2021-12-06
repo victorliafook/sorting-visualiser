@@ -2,13 +2,13 @@ function partition(arr, start = 0, end) {
   end = end ?? arr.length - 1;
   let left = start+1;
   let right = end;
-  let pivot = arr[start].key;
+  let pivot = arr[start].getRank();
   while(true) {
-      while(left <= right && arr[left].key <= pivot) {
+      while(left <= right && arr[left].getRank() <= pivot) {
         left++;
       }
 
-      while(left <= right && arr[right].key > pivot) {
+      while(left <= right && arr[right].getRank() > pivot) {
         right--;
       }
 

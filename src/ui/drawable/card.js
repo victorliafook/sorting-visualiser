@@ -1,5 +1,6 @@
 const Card = function(pos, cardWidth = 30, suit, rank) {
   const position = {...pos};
+  const finalPosition = {...pos};
 
   const width = cardWidth;
   const height = width * 1.3;
@@ -26,16 +27,38 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
   };
 
   const update = () => {
+    let xSpeed = (position.x - finalPosition.x === 0) ? 0 : (position.x - finalPosition.x < 0) ? 1 : -1;
+    let ySpeed = (position.y - finalPosition.y === 0) ? 0 : (position.y - finalPosition.y < 0) ? 1 : -1;
+    
+    position.x += xSpeed;
+    position.y += ySpeed;
+  };
 
+  const moveTo = (targetPosition) => {
+    validatePosition(targetPosition);
+    setFinalPosition(targetPosition);
+  };
+
+  const validatePosition = (position) => {
+    if (position === undefined || !Number.isInteger(position.x) || !Number.isInteger(position.y)) {
+      throw new Error('moveTo expects x and y coordinates');
+    }
   };
 
   const getWidth = () => {
     return width;
   }
 
-  const setPosition = (x, y) => {
-    position.x = x;
-    position.y = y;
+  const setPosition = (targetPosition) => {
+    position.x = targetPosition.x;
+    position.y = targetPosition.y;
+
+    setFinalPosition(targetPosition);
+  };
+
+  const setFinalPosition = (targetPosition) => {
+    finalPosition.x = targetPosition.x;
+    finalPosition.y = targetPosition.y;
   };
 
   const getRank = () => {
@@ -56,6 +79,7 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
   return {
     draw,
     update,
+    moveTo,
     getRank,
     getWidth,
     setPosition,

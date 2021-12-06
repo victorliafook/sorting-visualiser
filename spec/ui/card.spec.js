@@ -20,6 +20,14 @@ describe('Card specs', function() {
     expect(card.getRank()).toEqual(rank);
   });
 
+  it('implements Moveable', function() {
+    const card = new Card({}, 30, 0);
+    const position = {x:1,y:1};
+    card.moveTo(position);
+
+    expect(() => card.moveTo()).toThrowError(Error, 'moveTo expects x and y coordinates');
+  });
+
   it('draws base card correctly', function() {
     const position = {
       x: 50,
@@ -76,6 +84,25 @@ describe('Card specs', function() {
         ]
       );
     });
+  });
+
+  it('moves when updating', function() {
+    const position = {
+      x: 50,
+      y: 299
+    };
+    const p5Closure = getP5ClosureMock();
+    spyOn(p5Closure, 'rect');
+    const card = new Card(position);
+
+    card.moveTo({x:0, y:299});
+    card.update();
+    card.draw(p5Closure);
+    expect(p5Closure.rect).toHaveBeenCalledWith(49, 299, jasmine.anything(), jasmine.anything(), jasmine.anything());
+
+    card.update();
+    card.draw(p5Closure);
+    expect(p5Closure.rect).toHaveBeenCalledWith(48, 299, jasmine.anything(), jasmine.anything(), jasmine.anything());
   });
 
   const getP5ClosureMock = () => {

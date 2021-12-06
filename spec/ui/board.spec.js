@@ -39,8 +39,26 @@ describe('Board specs', function() {
     board.addCard(card1);
     board.addCard(card2);
 
-    expect(card1.setPosition).toHaveBeenCalledWith(5, 5);
-    expect(card2.setPosition).toHaveBeenCalledWith(40, 5);
+    const firstPosition = {x:5,y:5};
+    const secondPosition = {x:40,y:5};
+    expect(card1.setPosition).toHaveBeenCalledWith(firstPosition);
+    expect(card2.setPosition).toHaveBeenCalledWith(secondPosition);
+  });
+
+  it('updates its cards when updating itself', function() {
+    const board = new Board();
+
+    const card1 = new Card();
+    spyOn(card1, 'update');
+    const card2 = new Card();
+    spyOn(card2, 'update');
+
+    board.addCard(card1);
+    board.addCard(card2);
+
+    board.update();
+    expect(card1.update).toHaveBeenCalledWith();
+    expect(card2.update).toHaveBeenCalledWith();
   });
 
   const getP5ClosureMock = () => {

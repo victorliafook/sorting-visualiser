@@ -1,9 +1,9 @@
-const getKeyedObj = (key) => {
-  return { key: key };
+const getRankableObj = (key) => {
+  return { getRank: () => key };
 };
 
-const buildKeyedArray = (arr) => {
-  return arr.map(ele => getKeyedObj(ele));
+const buildArrayOfRankable = (arr) => {
+  return arr.map(ele => getRankableObj(ele));
 };
 
-module.exports = { getKeyedObj, buildKeyedArray };
+module.exports = { getRankableObj, buildArrayOfRankable };
