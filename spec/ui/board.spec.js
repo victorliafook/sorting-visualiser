@@ -20,7 +20,7 @@ describe('Board specs', function() {
     board.addCard(card1);
     board.addCard(card2);
 
-    const p5Closure = {};
+    const p5Closure = getP5ClosureMock();
     board.draw(p5Closure);
 
     expect(card1.draw).toHaveBeenCalledWith(p5Closure);
@@ -61,14 +61,38 @@ describe('Board specs', function() {
     expect(card2.update).toHaveBeenCalledWith();
   });
 
+  it('creates the background image only once', function() {
+    const board = new Board();
+
+    const p5Closure = getP5ClosureMock();
+    spyOn(p5Closure, 'createImage').and.returnValue(getImageMock());
+    spyOn(p5Closure, 'image');
+
+    board.draw(p5Closure);
+    board.draw(p5Closure);
+    expect(p5Closure.createImage).toHaveBeenCalledTimes(1);
+    expect(p5Closure.image).toHaveBeenCalledTimes(2);
+  });
+
   const getP5ClosureMock = () => {
     return {
-      stroke: () => {},
+      createImage: () => {
+        return getImageMock();
+      },
+      image: () => {},
+      noiseDetail: () => {},
       fill: () => {},
       rect: () => {},
       text: () => {},
       textSize: () => {},
       textAlign: () => {}
     };
+  };
+
+  const getImageMock = () => {
+    return { 
+      loadPixels: () => {},
+      updatePixels: () => {}
+    }
   };
 });

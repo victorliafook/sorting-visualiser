@@ -1,7 +1,7 @@
 const Drawing = require('../../src/ui/drawing');
 
 describe('Drawing specs', function() {
-  it('should update and draw every drawable', function() {
+  it('should update and draw every drawable and clear upon calling draw()', function() {
     const drawableOne = {
       draw: function(sketch) {},
       update: function() {},
@@ -20,11 +20,18 @@ describe('Drawing specs', function() {
     spyOn(drawableTwo, 'draw');
     spyOn(drawableTwo, 'update');
 
-    drawing.draw();
-    expect(drawableOne.draw).toHaveBeenCalledWith(drawing);
-    expect(drawableTwo.draw).toHaveBeenCalledWith(drawing);
+    const closureMock = {
+      clear: () => {}
+    };
+    spyOn(closureMock, 'clear');
+    drawing.draw.call(closureMock);
+
+    expect(drawableOne.draw).toHaveBeenCalledWith(closureMock);
+    expect(drawableTwo.draw).toHaveBeenCalledWith(closureMock);
 
     expect(drawableOne.update).toHaveBeenCalled();
     expect(drawableTwo.update).toHaveBeenCalled();
+
+    expect(closureMock.clear).toHaveBeenCalled();
   });
 });

@@ -66,10 +66,10 @@ describe("Mergesort tests", function() {
     
     spyOn(eventEmitter, "dispatchEvent");
 
-    const arr = buildArrayOfRankable([2,1]);
     mergesort.setEventEmitter(eventEmitter);
     mergesort.setEventFactory(eventFactory);
-    mergesort.sort(arr);
+
+    const arr = buildArrayOfRankable([2,1]);
     const swapEvent = {
       type: 'swap',
       detail: {
@@ -77,6 +77,7 @@ describe("Mergesort tests", function() {
       }
     };
 
+    mergesort.sort(arr);
     expect(eventEmitter.dispatchEvent).toHaveBeenCalledWith(jasmine.objectContaining(swapEvent));
   });
 });

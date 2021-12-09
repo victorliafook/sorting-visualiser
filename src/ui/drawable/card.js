@@ -76,6 +76,10 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
     }
   };
 
+  const getPosition = () => {
+    return {...position};
+  };
+
   return {
     draw,
     update,
@@ -83,6 +87,7 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
     getRank,
     getWidth,
     setPosition,
+    getPosition,
     SUIT_HEARTS,
     SUIT_DIAMONDS,
     SUIT_CLUBS,

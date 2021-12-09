@@ -42,4 +42,30 @@ describe('Quicksort tests', function() {
       expect(inputCopy.map(el => el.getRank())).toEqual(testCase.arrayOutput);
     });
   });
+
+  it("dispatches swap events using an emitter", function() {
+    const eventEmitter = {
+      dispatchEvent: () => {}
+    };
+    const eventFactory = {
+      createEvent: (eventName, data) => {
+        return {type: eventName, detail: {...data}}
+      }
+    };
+    
+    spyOn(eventEmitter, "dispatchEvent");
+
+    quicksort.setEventEmitter(eventEmitter);
+    quicksort.setEventFactory(eventFactory);
+
+    const arr = buildArrayOfRankable([2,1]);
+    const swapEvent = {
+      type: 'swap',
+      detail: {
+        card1: arr[0],card2: arr[1]
+      }
+    };
+    quicksort.sort(arr);
+    expect(eventEmitter.dispatchEvent).toHaveBeenCalledWith(jasmine.objectContaining(swapEvent));
+  });
 });

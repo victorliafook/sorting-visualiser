@@ -21,11 +21,11 @@ const merge = function (array, lStart, rStart, rEnd) {
 const shift = function (array, left, right) {
   while (right > left) {
     emitEvent(createEvent("swap", {
-      card1: array[right],
-      card2: array[right-1]
+      card1: array[right - 1],
+      card2: array[right]
     }));
 
-    [array[right], array[right - 1]] = [array[right - 1], array[right]];
+    [array[right - 1], array[right]] = [array[right], array[right - 1]];
     right--;
   }
 };

@@ -86,6 +86,16 @@ describe('Card specs', function() {
     });
   });
 
+  it('returns its current position', function() {
+    const position = {
+      x: 50,
+      y: 299
+    };
+    const card = new Card(position);
+
+    expect(card.getPosition()).toEqual(position);
+  });
+
   it('moves when updating', function() {
     const position = {
       x: 50,
@@ -130,5 +140,4 @@ describe('Card specs', function() {
         return 'black';  
     }
   };
-
 });
