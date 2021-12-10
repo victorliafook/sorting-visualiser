@@ -8,6 +8,8 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
   const cardPadding = width/10;
   const cardRadius = 5;
 
+  const UPDATE_SPEED = 3;
+
   const SUIT_HEARTS = 0;
   const SUIT_DIAMONDS = 1;
   const SUIT_CLUBS = 2;
@@ -27,11 +29,13 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
   };
 
   const update = () => {
-    let xSpeed = (position.x - finalPosition.x === 0) ? 0 : (position.x - finalPosition.x < 0) ? 1 : -1;
-    let ySpeed = (position.y - finalPosition.y === 0) ? 0 : (position.y - finalPosition.y < 0) ? 1 : -1;
+    let xDistance = position.x - finalPosition.x;
+    let xSpeed = (xDistance === 0) ? 0 : (xDistance < 0) ? UPDATE_SPEED : -UPDATE_SPEED;
+    let yDistance = position.y - finalPosition.y;
+    let ySpeed = (yDistance === 0) ? 0 : (yDistance < 0) ? UPDATE_SPEED : -UPDATE_SPEED;
     
-    position.x += xSpeed;
-    position.y += ySpeed;
+    position.x += Math.abs(xDistance) < UPDATE_SPEED ? -xDistance : xSpeed;
+    position.y += Math.abs(yDistance) < UPDATE_SPEED ? -yDistance : ySpeed;
   };
 
   const moveTo = (targetPosition) => {

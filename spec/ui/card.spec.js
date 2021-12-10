@@ -96,9 +96,10 @@ describe('Card specs', function() {
     expect(card.getPosition()).toEqual(position);
   });
 
-  it('moves when updating', function() {
+  it('moves when updating and stops without flicker', function() {
+    const cardSpeed = 3;
     const position = {
-      x: 50,
+      x: 5,
       y: 299
     };
     const p5Closure = getP5ClosureMock();
@@ -108,11 +109,11 @@ describe('Card specs', function() {
     card.moveTo({x:0, y:299});
     card.update();
     card.draw(p5Closure);
-    expect(p5Closure.rect).toHaveBeenCalledWith(49, 299, jasmine.anything(), jasmine.anything(), jasmine.anything());
+    expect(p5Closure.rect).toHaveBeenCalledWith(position.x - cardSpeed, 299, jasmine.anything(), jasmine.anything(), jasmine.anything());
 
     card.update();
     card.draw(p5Closure);
-    expect(p5Closure.rect).toHaveBeenCalledWith(48, 299, jasmine.anything(), jasmine.anything(), jasmine.anything());
+    expect(p5Closure.rect).toHaveBeenCalledWith(0, 299, jasmine.anything(), jasmine.anything(), jasmine.anything());
   });
 
   const getP5ClosureMock = () => {
