@@ -1,12 +1,27 @@
 const Card = require("../../src/ui/drawable/card");
-const { 
-  SUIT_HEARTS,
-  SUIT_DIAMONDS,
-  SUIT_CLUBS,
-  SUIT_SPADES
-} = {...Card()};
 
 describe('Card specs', function() {
+  it('implements Drawable', function() {
+    const card = new Card({});
+    card.update();
+    card.draw(getP5ClosureMock());
+  });
+
+  it('implements Rankable', function() {
+    const rank = getRandomRank();
+    const card = new Card({}, 30, 0, rank);
+    
+    expect(card.getRank()).toEqual(rank);
+  });
+
+  it('implements Moveable', function() {
+    const card = new Card({}, 30, 0);
+    const position = {x:1,y:1};
+    card.moveTo(position);
+
+    expect(() => card.moveTo()).toThrowError(Error, 'moveTo expects x and y coordinates');
+  });
+
   it('draws base card correctly', function() {
     const position = {
       x: 50,
@@ -15,15 +30,7 @@ describe('Card specs', function() {
     const width = 30;
     const card = new Card(position, width);
     
-    const p5Closure = {
-      stroke: () => {},
-      fill: () => {},
-      rect: () => {},
-      text: () => {},
-      textSize: () => {},
-      textAlign: () => {}
-    };
-
+    const p5Closure = getP5ClosureMock();
     spyOn(p5Closure, 'stroke');
     spyOn(p5Closure, 'fill');
     spyOn(p5Closure, 'rect');
@@ -41,11 +48,11 @@ describe('Card specs', function() {
     };
     const width = 30;
     const suits = [
-      SUIT_HEARTS,
-      SUIT_DIAMONDS,
-      SUIT_CLUBS,
-      SUIT_SPADES
-    ];
+      Card.SUIT_HEARTS,
+      Card.SUIT_DIAMONDS,
+      Card.SUIT_CLUBS,
+      Card.SUIT_SPADES
+    ];  
 
     const cardsExpectations = [];
     for (let i = 0; i < 2; i++) {
@@ -73,6 +80,36 @@ describe('Card specs', function() {
     });
   });
 
+  it('returns its current position', function() {
+    const position = {
+      x: 50,
+      y: 299
+    };
+    const card = new Card(position);
+
+    expect(card.getPosition()).toEqual(position);
+  });
+
+  it('moves when updating and stops without flicker', function() {
+    const cardSpeed = 3;
+    const position = {
+      x: 5,
+      y: 299
+    };
+    const p5Closure = getP5ClosureMock();
+    spyOn(p5Closure, 'rect');
+    const card = new Card(position);
+
+    card.moveTo({x:0, y:299});
+    card.update();
+    card.draw(p5Closure);
+    expect(p5Closure.rect).toHaveBeenCalledWith(position.x - cardSpeed, 299, jasmine.anything(), jasmine.anything(), jasmine.anything());
+
+    card.update();
+    card.draw(p5Closure);
+    expect(p5Closure.rect).toHaveBeenCalledWith(0, 299, jasmine.anything(), jasmine.anything(), jasmine.anything());
+  });
+
   const getP5ClosureMock = () => {
     return {
       stroke: () => {},
@@ -90,13 +127,12 @@ describe('Card specs', function() {
 
   const getExpectedSuitColour = (suit) => {
     switch (suit) {
-      case SUIT_HEARTS:
+      case Card.SUIT_HEARTS:
         return 'red';
-      case SUIT_DIAMONDS:
+      case Card.SUIT_DIAMONDS:
         return 'red';
       default:
         return 'black';  
     }
   };
-
 });
