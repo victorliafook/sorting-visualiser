@@ -1,3 +1,8 @@
+const SUIT_HEARTS = 0,
+  SUIT_DIAMONDS = 1,
+  SUIT_CLUBS = 2,
+  SUIT_SPADES = 3;
+
 const Card = function(pos, cardWidth = 30, suit, rank) {
   const position = {...pos};
   const finalPosition = {...pos};
@@ -9,11 +14,6 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
   const cardRadius = 5;
 
   const UPDATE_SPEED = 3;
-
-  const SUIT_HEARTS = 0;
-  const SUIT_DIAMONDS = 1;
-  const SUIT_CLUBS = 2;
-  const SUIT_SPADES = 3;
 
   const draw = (closure) => {
     closure.stroke('black');
@@ -98,5 +98,10 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
     SUIT_SPADES
   }
 }
+
+Card.SUIT_HEARTS = SUIT_HEARTS,
+Card.SUIT_DIAMONDS = SUIT_DIAMONDS,
+Card.SUIT_CLUBS = SUIT_CLUBS,
+Card.SUIT_SPADES = SUIT_SPADES;
 
 module.exports = Card;

@@ -38,10 +38,15 @@ const Board = function(width, height) {
     cards.push(card);
   };
 
+  const getCards = () => {
+    return [...cards];
+  };
+
   return {
     draw,
     update,
-    addCard
+    addCard,
+    getCards,
   }
 }
 

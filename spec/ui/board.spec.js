@@ -74,6 +74,21 @@ describe('Board specs', function() {
     expect(p5Closure.image).toHaveBeenCalledTimes(2);
   });
 
+  it('returns a copy of its cards when getCards is called', function() {
+    const board = new Board();
+
+    const card1 = new Card({}, 0);
+    board.addCard(card1);
+
+    const card2 = new Card({}, 1);
+    board.addCard(card2);
+
+    const cards = board.getCards();
+    expect(cards).toContain(jasmine.objectContaining(card1));
+    expect(cards).toContain(jasmine.objectContaining(card2));
+    expect(cards.length).toBe(2);
+  });
+
   const getP5ClosureMock = () => {
     return {
       createImage: () => {

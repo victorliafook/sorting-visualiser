@@ -50,7 +50,6 @@ describe("Mergesort tests", function() {
 
     let sorted = mergesort.sort([...inputArray]);
 
-    console.info('\nstable order:', sorted.indexOf(firstOne), sorted.indexOf(secondOne), sorted.indexOf(thirdOne));
     expect(sorted.indexOf(firstOne) < sorted.indexOf(secondOne) && sorted.indexOf(secondOne) < sorted.indexOf(thirdOne)).toBe(true);
   });
 

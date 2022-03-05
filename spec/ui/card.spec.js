@@ -1,10 +1,4 @@
 const Card = require("../../src/ui/drawable/card");
-const { 
-  SUIT_HEARTS,
-  SUIT_DIAMONDS,
-  SUIT_CLUBS,
-  SUIT_SPADES
-} = {...Card()};
 
 describe('Card specs', function() {
   it('implements Drawable', function() {
@@ -54,11 +48,11 @@ describe('Card specs', function() {
     };
     const width = 30;
     const suits = [
-      SUIT_HEARTS,
-      SUIT_DIAMONDS,
-      SUIT_CLUBS,
-      SUIT_SPADES
-    ];
+      Card.SUIT_HEARTS,
+      Card.SUIT_DIAMONDS,
+      Card.SUIT_CLUBS,
+      Card.SUIT_SPADES
+    ];  
 
     const cardsExpectations = [];
     for (let i = 0; i < 2; i++) {
@@ -133,9 +127,9 @@ describe('Card specs', function() {
 
   const getExpectedSuitColour = (suit) => {
     switch (suit) {
-      case SUIT_HEARTS:
+      case Card.SUIT_HEARTS:
         return 'red';
-      case SUIT_DIAMONDS:
+      case Card.SUIT_DIAMONDS:
         return 'red';
       default:
         return 'black';  
