@@ -34,4 +34,35 @@ describe('Drawing specs', function() {
 
     expect(closureMock.clear).toHaveBeenCalled();
   });
+
+  it('should notify subscribers for the right events when publish is called', function() {
+    const subscriber1 = {notify: () => {}};
+    const subscriber2 = {notify: () => {}};
+    const subscriber3 = {notify: () => {}};
+    spyOn(subscriber1, 'notify');
+    spyOn(subscriber2, 'notify');
+    spyOn(subscriber3, 'notify');
+
+    const drawing = new Drawing();
+    drawing.add(subscriber1);
+    drawing.subscribe(subscriber1, 'swap');
+
+    drawing.add(subscriber2);
+    drawing.subscribe(subscriber2, 'highlight');
+
+    drawing.add(subscriber3);
+    drawing.subscribe(subscriber3, 'highlight');
+
+    let eventMock = {type: 'swap', data: ''};
+    drawing.publish(eventMock);
+    expect(subscriber1.notify).toHaveBeenCalledWith(eventMock);
+    expect(subscriber2.notify).not.toHaveBeenCalled();
+    expect(subscriber2.notify).not.toHaveBeenCalled();
+
+    eventMock = {type: 'highlight', data: '2'};
+    drawing.publish(eventMock);
+    expect(subscriber1.notify).not.toHaveBeenCalledWith(eventMock);
+    expect(subscriber2.notify).toHaveBeenCalledWith(eventMock);
+    expect(subscriber2.notify).toHaveBeenCalledWith(eventMock);
+  });
 });
