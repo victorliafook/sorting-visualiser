@@ -1,7 +1,10 @@
+const InfoDisplay = require("./infoDisplay");
+
 const Board = function(width, height) {
   const padding = 5;
   const cards = [];
   let backgroundImg = null;
+  const infoDisplay = new InfoDisplay();
 
   const draw = (closure) => {
     if (backgroundImg === null) {
@@ -24,6 +27,8 @@ const Board = function(width, height) {
     cards.forEach(card => {
       card.draw(closure);
     })
+
+    infoDisplay.draw(closure);
   }
 
   const update = () => {
@@ -36,6 +41,11 @@ const Board = function(width, height) {
     let xPosition = (cards.length + 1) * padding + cards.length * card.getWidth();
     card.setPosition({x: xPosition, y: padding});
     cards.push(card);
+    infoDisplay.setNumberOfCards(cards.length);
+  };
+
+  const notify = (event) => {
+    if (event.type === 'swap') infoDisplay.incrementSwap();
   };
 
   const getCards = () => {
@@ -47,6 +57,7 @@ const Board = function(width, height) {
     update,
     addCard,
     getCards,
+    notify,
   }
 }
 

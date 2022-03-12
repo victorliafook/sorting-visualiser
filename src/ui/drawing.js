@@ -1,5 +1,6 @@
 const Drawing = function() {
   const drawingsSet = [];
+  const subscribers = {};
   
   const draw = function() {
     this.clear();
@@ -12,10 +13,24 @@ const Drawing = function() {
   const add = (drawable) => {
     drawingsSet.push(drawable)
   };
+
+  const subscribe = (drawable, eventName) => {
+    const subscriber = drawingsSet.find((element) => element === drawable);
+    subscribers[eventName] = subscribers[eventName] ?? [];
+    subscribers[eventName].push(subscriber);
+  }
+
+  const publish = (event) => {
+    subscribers[event.type].forEach((subscriber) => {
+      subscriber.notify(event);
+    });
+  }
   
   return {
     draw,
-    add
+    add,
+    subscribe,
+    publish,
   };
 };
 

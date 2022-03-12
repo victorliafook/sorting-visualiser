@@ -11,10 +11,12 @@ const Visualisation = require("./ui/visualisation");
 const mergesortDrawing = new Drawing();
 const mergesortBoard = new Board(800, 200);
 mergesortDrawing.add(mergesortBoard);
+mergesortDrawing.subscribe(mergesortBoard, 'swap');
 
 const quicksortDrawing = new Drawing();
 const quicksortBoard = new Board(800, 200);
 quicksortDrawing.add(quicksortBoard);
+quicksortDrawing.subscribe(quicksortBoard, 'swap');
 
 const cardsAttributes = getArrayOfRandomCardAttributes(20);
 
@@ -51,7 +53,7 @@ document.addEventListener('click', () => {
 
 const visualisations = [];
 
-const mergeSortVisualisation = Visualisation();
+const mergeSortVisualisation = new Visualisation();
 mergeSortVisualisation.setAlgorithm(mergesort)
     .setSortables(mergesortBoard.getCards())
     .setDrawing(mergesortDrawing)
@@ -62,7 +64,7 @@ new p5(mergeSortVisualisation.run(), document.getElementById(mergesortVisualizer
 
 visualisations.push(mergeSortVisualisation);
 
-const quickSortVisualisation = Visualisation();
+const quickSortVisualisation = new Visualisation();
 quickSortVisualisation.setAlgorithm(quicksort)
     .setSortables(quicksortBoard.getCards())
     .setDrawing(quicksortDrawing)
