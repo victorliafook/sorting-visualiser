@@ -89,6 +89,28 @@ describe('Board specs', function() {
     expect(cards.length).toBe(2);
   });
 
+  it('draws an InfoDisplay when it is set', function() {
+    const board = new Board();
+    const displayMock = {draw: () => {}, setTitle: () => {}};
+    spyOn(displayMock, 'draw');
+    board.setDisplay(displayMock);
+
+    const p5Closure = getP5ClosureMock();
+    board.draw(p5Closure);
+    expect(displayMock.draw).toHaveBeenCalledWith(p5Closure);
+  });
+
+  it('sets the display\'s title when it is set up', function() {
+    const board = new Board();
+    const displayMock = {draw: () => {}, setTitle: () => {}};
+    spyOn(displayMock, 'setTitle');
+    board.setDisplay(displayMock);
+
+    const title = `some time ${Math.random()}`;
+    board.setTitle(title);
+    expect(displayMock.setTitle).toHaveBeenCalledWith(title);
+  });
+
   const getP5ClosureMock = () => {
     return {
       createImage: () => {
