@@ -74,14 +74,9 @@ describe('visualisation tests', function() {
     expect(algorithMock.sort).toHaveBeenCalledWith(cards);
   });
 
-  it('consumes algorithm\'s events from queue when update() is called and notifies drawing - swaps cards', function() {
-    let card1 = {moveTo: () => {}, getPosition: () => 1};
-    let card2 = {moveTo: () => {}, getPosition: () => 2};
-    spyOn(card1, 'moveTo');
-    spyOn(card2, 'moveTo');
-
-    const mockEvent1 = {detail: {card1: card1, card2: card2}};
-    const mockEvent2 = {detail: {card1: card2, card2: card1}};
+  it('consumes algorithm\'s events from queue when update() is called and notifies drawing', function() {
+    const mockEvent1 = {detail: {1:1}};
+    const mockEvent2 = {detail: {2:2}};
     algorithMock.sort = () => {
       documentMock.dispatchEvent(mockEvent1);
       documentMock.dispatchEvent(mockEvent2);
@@ -99,13 +94,9 @@ describe('visualisation tests', function() {
     visualisation.run();
 
     visualisation.update();
-    expect(card1.moveTo).toHaveBeenCalledWith(2);
-    expect(card2.moveTo).toHaveBeenCalledWith(1);
     expect(drawingMock.publish).toHaveBeenCalledWith(mockEvent1);
 
     visualisation.update();
-    expect(card1.moveTo).toHaveBeenCalledWith(2);
-    expect(card2.moveTo).toHaveBeenCalledWith(1);
     expect(drawingMock.publish).toHaveBeenCalledWith(mockEvent2);
   });
 });

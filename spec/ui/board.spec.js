@@ -27,6 +27,25 @@ describe('Board specs', function() {
     expect(card2.draw).toHaveBeenCalledWith(p5Closure);
   });
 
+  it('notifies its cards when notified of an event', function() {
+    const board = new Board();
+
+    const card1 = new Card();
+    spyOn(card1, 'notify');
+    
+    const card2 = new Card();
+    spyOn(card2, 'notify');
+
+    board.addCard(card1);
+    board.addCard(card2);
+
+    const eventMock = {anything: 1};
+    board.notify(eventMock);
+
+    expect(card1.notify).toHaveBeenCalledWith(eventMock);
+    expect(card2.notify).toHaveBeenCalledWith(eventMock);
+  });
+
   it('sets its cards on the right positions', function() {
     const board = new Board();
 

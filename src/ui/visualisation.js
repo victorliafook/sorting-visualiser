@@ -31,12 +31,6 @@ function Visualisation() {
   this.update = () => {
     const event = queue.shift();
     this.drawing.publish(event);
-    
-    let card1Pos = event.detail.card1.getPosition();
-    let card2Pos = event.detail.card2.getPosition();
-
-    event.detail.card1.moveTo(card2Pos);
-    event.detail.card2.moveTo(card1Pos);
   };
 
   this.setDrawing = (drawing) => {
