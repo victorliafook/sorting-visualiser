@@ -6,6 +6,18 @@ describe('infoDisplay specs', function() {
     info.draw(getP5ClosureMock());
   });
 
+  it('sets and displays title', function() {
+    const info = new InfoDisplay();
+    const p5Mock = getP5ClosureMock();
+    spyOn(p5Mock, 'text');
+
+    const title = `some Title ${Math.random()}`;
+    info.setTitle(title);
+    info.draw(p5Mock);
+
+    expect(p5Mock.text).toHaveBeenCalledWith(title, 10, 140);
+  });
+
   it('shows up right text size and alignment', function() {
     const info = new InfoDisplay();
     const p5Mock = getP5ClosureMock();

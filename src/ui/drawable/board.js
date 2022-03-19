@@ -4,7 +4,8 @@ const Board = function(width, height) {
   const padding = 5;
   const cards = [];
   let backgroundImg = null;
-  const infoDisplay = new InfoDisplay();
+  let title = '';
+  let infoDisplay;
 
   const draw = (closure) => {
     if (backgroundImg === null) {
@@ -28,7 +29,7 @@ const Board = function(width, height) {
       card.draw(closure);
     })
 
-    infoDisplay.draw(closure);
+    infoDisplay && infoDisplay.draw(closure);
   }
 
   const update = () => {
@@ -37,11 +38,21 @@ const Board = function(width, height) {
     })
   };
 
+  const setTitle = (string) => {
+    title = string;
+    infoDisplay && infoDisplay.setTitle(title);
+  }
+
+  const setDisplay = (display) => {
+    infoDisplay = display;
+    infoDisplay.setTitle(title);
+  }
+
   const addCard = (card) => {
     let xPosition = (cards.length + 1) * padding + cards.length * card.getWidth();
     card.setPosition({x: xPosition, y: padding});
     cards.push(card);
-    infoDisplay.setNumberOfCards(cards.length);
+    infoDisplay && infoDisplay.setNumberOfCards(cards.length);
   };
 
   const notify = (event) => {
@@ -55,6 +66,8 @@ const Board = function(width, height) {
   return {
     draw,
     update,
+    setTitle,
+    setDisplay,
     addCard,
     getCards,
     notify,

@@ -7,14 +7,19 @@ const Card = require("./ui/drawable/card");
 const mergesort = require("./algorithms/mergesort");
 const quicksort = require("./algorithms/quicksort");
 const Visualisation = require("./ui/visualisation");
+const InfoDisplay = require("./ui/drawable/infoDisplay");
 
 const mergesortDrawing = new Drawing();
 const mergesortBoard = new Board(800, 200);
+mergesortBoard.setTitle('MergeSort (in-place)');
+mergesortBoard.setDisplay(new InfoDisplay());
 mergesortDrawing.add(mergesortBoard);
 mergesortDrawing.subscribe(mergesortBoard, 'swap');
 
 const quicksortDrawing = new Drawing();
 const quicksortBoard = new Board(800, 200);
+quicksortBoard.setTitle('QuickSort');
+quicksortBoard.setDisplay(new InfoDisplay());
 quicksortDrawing.add(quicksortBoard);
 quicksortDrawing.subscribe(quicksortBoard, 'swap');
 
