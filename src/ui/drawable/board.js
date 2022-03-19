@@ -57,6 +57,7 @@ const Board = function(width, height) {
 
   const notify = (event) => {
     if (event.type === 'swap') infoDisplay.incrementSwap();
+    cards.forEach(card => card.notify(event));
   };
 
   const getCards = () => {

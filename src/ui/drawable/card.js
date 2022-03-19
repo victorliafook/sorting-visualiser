@@ -15,7 +15,7 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
 
   const UPDATE_SPEED = 3;
 
-  const draw = (closure) => {
+  this.draw = (closure) => {
     closure.stroke('black');
     closure.fill('white');
     closure.rect(position.x, position.y, width, height, cardRadius);
@@ -28,7 +28,7 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
     closure.text(rank, position.x + width * 0.9, position.y + height - cardPadding);
   };
 
-  const update = () => {
+  this.update = () => {
     let xDistance = position.x - finalPosition.x;
     let xSpeed = (xDistance === 0) ? 0 : (xDistance < 0) ? UPDATE_SPEED : -UPDATE_SPEED;
     let yDistance = position.y - finalPosition.y;
@@ -38,7 +38,7 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
     position.y += Math.abs(yDistance) < UPDATE_SPEED ? -yDistance : ySpeed;
   };
 
-  const moveTo = (targetPosition) => {
+  this.moveTo = (targetPosition) => {
     validatePosition(targetPosition);
     setFinalPosition(targetPosition);
   };
@@ -49,11 +49,11 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
     }
   };
 
-  const getWidth = () => {
+  this.getWidth = () => {
     return width;
   }
 
-  const setPosition = (targetPosition) => {
+  this.setPosition = (targetPosition) => {
     position.x = targetPosition.x;
     position.y = targetPosition.y;
 
@@ -65,7 +65,7 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
     finalPosition.y = targetPosition.y;
   };
 
-  const getRank = () => {
+  this.getRank = () => {
     return rank;
   };
 
@@ -80,22 +80,19 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
     }
   };
 
-  const getPosition = () => {
+  this.getPosition = () => {
     return {...position};
   };
 
-  return {
-    draw,
-    update,
-    moveTo,
-    getRank,
-    getWidth,
-    setPosition,
-    getPosition,
-    SUIT_HEARTS,
-    SUIT_DIAMONDS,
-    SUIT_CLUBS,
-    SUIT_SPADES
+  this.notify = (event) => {
+    if (event.type === 'swap') handleSwap(event);
+  };
+
+  const handleSwap = (event) => {
+    const card1 = event.detail.card1;
+    const card2 = event.detail.card2;
+    if (this === card1) this.moveTo(card2.getPosition());
+    if (this === card2) this.moveTo(card1.getPosition());
   }
 }
 
