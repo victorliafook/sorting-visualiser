@@ -19,6 +19,7 @@ function Visualisation() {
   this.setDomElement = (element) => {
     this.domElement = element;
     this.domElement.addEventListener('swap', swapHandler.bind(this));
+    this.domElement.addEventListener('highlight', swapHandler.bind(this));
     this.algorithm && this.algorithm.setEventEmitter(this.domElement);
 
     return this;
@@ -30,7 +31,7 @@ function Visualisation() {
 
   this.update = () => {
     const event = queue.shift();
-    this.drawing.publish(event);
+    event && this.drawing.publish(event);
   };
 
   this.setDrawing = (drawing) => {
