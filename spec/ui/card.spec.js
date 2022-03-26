@@ -36,7 +36,7 @@ describe('Card specs', function() {
     spyOn(p5Closure, 'rect');
 
     card.draw(p5Closure);
-    expect(p5Closure.stroke).toHaveBeenCalledWith('black');
+    expect(p5Closure.stroke).toHaveBeenCalledWith('grey');
     expect(p5Closure.fill).toHaveBeenCalledWith('white');
     expect(p5Closure.rect).toHaveBeenCalledWith(position.x, position.y, width, width * 1.3, jasmine.anything());
   });
@@ -69,7 +69,6 @@ describe('Card specs', function() {
       spyOn(p5Closure, 'text');
 
       expectation.card.draw(p5Closure);
-      expect(p5Closure.stroke).toHaveBeenCalledWith('black');
       expect(p5Closure.fill).toHaveBeenCalledWith(expectation.colour);
       expect(p5Closure.text.calls.allArgs()).toEqual(
         [

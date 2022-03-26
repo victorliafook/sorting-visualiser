@@ -19,7 +19,7 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
   const UPDATE_SPEED = 3;
 
   this.draw = (closure) => {
-    closure.stroke('black');
+    closure.stroke('grey');
     closure.fill(highlighted ? highlightColor : 'white');
     closure.rect(position.x, position.y, width, height, cardRadius);
     
