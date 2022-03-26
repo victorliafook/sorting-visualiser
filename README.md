@@ -17,6 +17,10 @@ If using NVM (Node Version Manager)
 
 Otherwise follow instructions to install NodeJS v16 https://nodejs.org/en/download/releases/
 
+to install the app's dependencies, run
+
+`$ npm install`
+
 ## Build
 `$ npm run build`
 
