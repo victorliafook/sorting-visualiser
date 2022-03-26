@@ -12,12 +12,15 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
   const textSize = width/3;
   const cardPadding = width/10;
   const cardRadius = 5;
+  const highlightColor = 150;
+
+  let highlighted = false;
 
   const UPDATE_SPEED = 3;
 
   this.draw = (closure) => {
     closure.stroke('black');
-    closure.fill('white');
+    closure.fill(highlighted ? highlightColor : 'white');
     closure.rect(position.x, position.y, width, height, cardRadius);
     
     closure.textSize(textSize);
@@ -86,6 +89,7 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
 
   this.notify = (event) => {
     if (event.type === 'swap') handleSwap(event);
+    if (event.type === 'highlight') handleHighlight(event);
   };
 
   const handleSwap = (event) => {
@@ -94,6 +98,12 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
     if (this === card1) this.moveTo(card2.getPosition());
     if (this === card2) this.moveTo(card1.getPosition());
   }
+
+  const handleHighlight = (event) => {
+    if (event.detail.cards.indexOf(this) >= 0) {
+      highlighted = !highlighted;
+    }
+  };
 }
 
 Card.SUIT_HEARTS = SUIT_HEARTS,
