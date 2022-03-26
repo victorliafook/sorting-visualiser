@@ -6,6 +6,8 @@ const Card = require("./ui/drawable/card");
 
 const mergesort = require("./algorithms/mergesort");
 const quicksort = require("./algorithms/quicksort");
+const insertionsort = require("./algorithms/insertionsort")
+
 const Visualisation = require("./ui/visualisation");
 const InfoDisplay = require("./ui/drawable/infoDisplay");
 
@@ -23,6 +25,13 @@ quicksortBoard.setDisplay(new InfoDisplay());
 quicksortDrawing.add(quicksortBoard);
 quicksortDrawing.subscribe(quicksortBoard, 'swap');
 
+const insertionsortDrawing = new Drawing();
+const insertionsortBoard = new Board(800, 200);
+insertionsortBoard.setTitle('InsertionSort');
+insertionsortBoard.setDisplay(new InfoDisplay());
+insertionsortDrawing.add(insertionsortBoard);
+insertionsortDrawing.subscribe(insertionsortBoard, 'swap');
+
 const cardsAttributes = getArrayOfRandomCardAttributes(20);
 
 for(let cardAttribute of cardsAttributes) {
@@ -31,10 +40,14 @@ for(let cardAttribute of cardsAttributes) {
 
     card = new Card(null, 30, cardAttribute.suit, cardAttribute.rank);
     quicksortBoard.addCard(card);
+
+    card = new Card(null, 30, cardAttribute.suit, cardAttribute.rank);
+    insertionsortBoard.addCard(card);
 }
 
 const mergesortVisualizerAreaId = "visualiser-area-merge";
 const quicksortVisualizerAreaId = "visualiser-area-quick";
+const insertionSortVisualizerAreaId = "visualiser-area-insertion";
 
 const eventFactory = {
     createEvent: (eventName, data) => {
@@ -76,9 +89,20 @@ quickSortVisualisation.setAlgorithm(quicksort)
     .setEventFactory(eventFactory)
     .setSketchFactory(sketchFactory)
     .setDomElement(document.getElementById(quicksortVisualizerAreaId));
-new p5(quickSortVisualisation.run(), document.getElementById(mergesortVisualizerAreaId));
+new p5(quickSortVisualisation.run(), document.getElementById(quicksortVisualizerAreaId));
 
 visualisations.push(quickSortVisualisation);
+
+const insertionSortVisualisation = new Visualisation();
+insertionSortVisualisation.setAlgorithm(insertionsort)
+    .setSortables(insertionsortBoard.getCards())
+    .setDrawing(insertionsortDrawing)
+    .setEventFactory(eventFactory)
+    .setSketchFactory(sketchFactory)
+    .setDomElement(document.getElementById(insertionSortVisualizerAreaId));
+new p5(insertionSortVisualisation.run(), document.getElementById(insertionSortVisualizerAreaId));
+
+visualisations.push(insertionSortVisualisation);
 
 function getArrayOfRandomCardAttributes(length) {
     const cardAttributes = [];
