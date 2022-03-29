@@ -84,7 +84,7 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
   };
 
   this.getPosition = () => {
-    return {...position};
+    return {...finalPosition};
   };
 
   this.notify = (event) => {
@@ -95,8 +95,11 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
   const handleSwap = (event) => {
     const card1 = event.detail.card1;
     const card2 = event.detail.card2;
-    if (this === card1) this.moveTo(card2.getPosition());
-    if (this === card2) this.moveTo(card1.getPosition());
+    if (this === card1) { 
+      const thisPosition = this.getPosition();
+      this.moveTo(card2.getPosition());
+      card2.moveTo(thisPosition);
+    }
   }
 
   const handleHighlight = (event) => {
