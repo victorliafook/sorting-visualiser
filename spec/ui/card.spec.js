@@ -109,14 +109,16 @@ describe('Card specs', function() {
     expect(p5Closure.rect).toHaveBeenCalledWith(0, 299, jasmine.anything(), jasmine.anything(), jasmine.anything());
   });
 
-  it('swaps its position with another card when notified of a swap event with a reference to itself', function() {
-    const card1 = new Card();
+  it('swaps its position with another card when notified of a swap event with a reference to itself as card1', function() {
+    const card1Position = {x: Math.floor(Math.random()*10), y: Math.floor(Math.random()*10)};
+    const card1 = new Card(card1Position);
 
     const mockPosition = { x: Math.floor(Math.random()*10), y: Math.floor(Math.random()*10) };
     const card2 = {
       getPosition: () => {
         return mockPosition;
-      }
+      },
+      moveTo: () => {},
     };
     const eventMock = {
       type: 'swap', detail: {
@@ -125,9 +127,35 @@ describe('Card specs', function() {
     };
 
     spyOn(card1, 'moveTo');
+    spyOn(card2, 'moveTo');
+
     card1.notify(eventMock);
 
     expect(card1.moveTo).toHaveBeenCalledWith(card2.getPosition());
+    expect(card2.moveTo).toHaveBeenCalledWith(card1Position);
+  });
+
+  it('moves to the counterpart\'s finalPosition during a swap, not the current position (while moving)', function() {
+    const card1Position = {x: Math.floor(Math.random()*10), y: Math.floor(Math.random()*10)};
+    const card1 = new Card(card1Position);
+
+    const initialPosition = { x: Math.floor(Math.random()*10), y: Math.floor(Math.random()*10) };
+    const card2 = new Card(initialPosition);
+    const eventMock = {
+      type: 'swap', detail: {
+        card1: card1, card2: card2
+      }
+    };
+
+    spyOn(card1, 'moveTo');
+
+    const finalPosition = { x: Math.floor(Math.random()*100), y: Math.floor(Math.random()*100) };
+    card2.moveTo(finalPosition);
+    card2.update();
+    card2.update();
+    card1.notify(eventMock);
+
+    expect(card1.moveTo).toHaveBeenCalledWith(finalPosition);
   });
 
   it('switches highlight color when notified of a highlight event referencing itself', function() {
