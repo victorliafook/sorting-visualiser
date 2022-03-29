@@ -4,7 +4,7 @@
   "description": "step-by-step visualization of sorting algorithms for educational purposes",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine",
+    "test": "nyc jasmine",
     "serve": "browser-sync start --server",
     "build": "webpack --mode=production"
   },
@@ -13,6 +13,7 @@
   "devDependencies": {
     "browser-sync": "^2.27.5",
     "jasmine": "^3.10.0",
+    "nyc": "^15.1.0",
     "webpack": "^5.58.2",
     "webpack-cli": "^4.9.1"
   },
