@@ -7,6 +7,7 @@ const Card = require("./ui/drawable/card");
 const mergesort = require("./algorithms/mergesort");
 const quicksort = require("./algorithms/quicksort");
 const insertionsort = require("./algorithms/insertionsort")
+const bubblesort = require("./algorithms/bubblesort")
 
 const Visualisation = require("./ui/visualisation");
 const InfoDisplay = require("./ui/drawable/infoDisplay");
@@ -32,6 +33,13 @@ insertionsortBoard.setDisplay(new InfoDisplay());
 insertionsortDrawing.add(insertionsortBoard);
 insertionsortDrawing.subscribe(insertionsortBoard, 'swap');
 
+const bubblesortDrawing = new Drawing();
+const bubblesortBoard = new Board(800, 200);
+bubblesortBoard.setTitle('BubbleSort');
+bubblesortBoard.setDisplay(new InfoDisplay());
+bubblesortDrawing.add(bubblesortBoard);
+bubblesortDrawing.subscribe(bubblesortBoard, 'swap');
+
 const cardsAttributes = getArrayOfRandomCardAttributes(20);
 
 for(let cardAttribute of cardsAttributes) {
@@ -43,11 +51,15 @@ for(let cardAttribute of cardsAttributes) {
 
     card = new Card(null, 30, cardAttribute.suit, cardAttribute.rank);
     insertionsortBoard.addCard(card);
+
+    card = new Card(null, 30, cardAttribute.suit, cardAttribute.rank);
+    bubblesortBoard.addCard(card);
 }
 
 const mergesortVisualizerAreaId = "visualiser-area-merge";
 const quicksortVisualizerAreaId = "visualiser-area-quick";
 const insertionSortVisualizerAreaId = "visualiser-area-insertion";
+const bubbleSortVisualizerAreaId = "visualiser-area-bubble";
 
 const eventFactory = {
     createEvent: (eventName, data) => {
@@ -103,6 +115,17 @@ insertionSortVisualisation.setAlgorithm(insertionsort)
 new p5(insertionSortVisualisation.run(), document.getElementById(insertionSortVisualizerAreaId));
 
 visualisations.push(insertionSortVisualisation);
+
+const bubbleSortVisualisation = new Visualisation();
+bubbleSortVisualisation.setAlgorithm(bubblesort)
+    .setSortables(bubblesortBoard.getCards())
+    .setDrawing(bubblesortDrawing)
+    .setEventFactory(eventFactory)
+    .setSketchFactory(sketchFactory)
+    .setDomElement(document.getElementById(bubbleSortVisualizerAreaId));
+new p5(bubbleSortVisualisation.run(), document.getElementById(bubbleSortVisualizerAreaId));
+
+visualisations.push(bubbleSortVisualisation);
 
 function getArrayOfRandomCardAttributes(length) {
     const cardAttributes = [];
