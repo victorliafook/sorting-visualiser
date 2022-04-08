@@ -6,8 +6,9 @@ const Card = require("./ui/drawable/card");
 
 const mergesort = require("./algorithms/mergesort");
 const quicksort = require("./algorithms/quicksort");
-const insertionsort = require("./algorithms/insertionsort")
-const bubblesort = require("./algorithms/bubblesort")
+const insertionsort = require("./algorithms/insertionsort");
+const selectionsort = require("./algorithms/selectionsort");
+const bubblesort = require("./algorithms/bubblesort");
 
 const Visualisation = require("./ui/visualisation");
 const InfoDisplay = require("./ui/drawable/infoDisplay");
@@ -33,6 +34,13 @@ insertionsortBoard.setDisplay(new InfoDisplay());
 insertionsortDrawing.add(insertionsortBoard);
 insertionsortDrawing.subscribe(insertionsortBoard, 'swap');
 
+const selectionsortDrawing = new Drawing();
+const selectionsortBoard = new Board(800, 200);
+selectionsortBoard.setTitle('SelectionSort');
+selectionsortBoard.setDisplay(new InfoDisplay());
+selectionsortDrawing.add(selectionsortBoard);
+selectionsortDrawing.subscribe(selectionsortBoard, 'swap');
+
 const bubblesortDrawing = new Drawing();
 const bubblesortBoard = new Board(800, 200);
 bubblesortBoard.setTitle('BubbleSort');
@@ -53,12 +61,16 @@ for(let cardAttribute of cardsAttributes) {
     insertionsortBoard.addCard(card);
 
     card = new Card(null, 30, cardAttribute.suit, cardAttribute.rank);
+    selectionsortBoard.addCard(card);
+
+    card = new Card(null, 30, cardAttribute.suit, cardAttribute.rank);
     bubblesortBoard.addCard(card);
 }
 
 const mergesortVisualizerAreaId = "visualiser-area-merge";
 const quicksortVisualizerAreaId = "visualiser-area-quick";
 const insertionSortVisualizerAreaId = "visualiser-area-insertion";
+const selectionSortVisualizerAreaId = "visualiser-area-selection";
 const bubbleSortVisualizerAreaId = "visualiser-area-bubble";
 
 const eventFactory = {
@@ -115,6 +127,17 @@ insertionSortVisualisation.setAlgorithm(insertionsort)
 new p5(insertionSortVisualisation.run(), document.getElementById(insertionSortVisualizerAreaId));
 
 visualisations.push(insertionSortVisualisation);
+
+const selectionSortVisualisation = new Visualisation();
+selectionSortVisualisation.setAlgorithm(selectionsort)
+    .setSortables(selectionsortBoard.getCards())
+    .setDrawing(selectionsortDrawing)
+    .setEventFactory(eventFactory)
+    .setSketchFactory(sketchFactory)
+    .setDomElement(document.getElementById(selectionSortVisualizerAreaId));
+new p5(selectionSortVisualisation.run(), document.getElementById(selectionSortVisualizerAreaId));
+
+visualisations.push(selectionSortVisualisation);
 
 const bubbleSortVisualisation = new Visualisation();
 bubbleSortVisualisation.setAlgorithm(bubblesort)
