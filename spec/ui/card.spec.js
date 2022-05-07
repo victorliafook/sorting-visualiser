@@ -135,7 +135,7 @@ describe('Card specs', function() {
     expect(card2.moveTo).toHaveBeenCalledWith(card1Position);
   });
 
-  it('moves to the counterpart\'s finalPosition during a swap, not the current position (while moving)', function() {
+  it('moves to its counterpart\'s finalPosition during a swap, not their current position (while moving)', function() {
     const card1Position = {x: Math.floor(Math.random()*10), y: Math.floor(Math.random()*10)};
     const card1 = new Card(card1Position);
 
@@ -153,6 +153,7 @@ describe('Card specs', function() {
     card2.moveTo(finalPosition);
     card2.update();
     card2.update();
+
     card1.notify(eventMock);
 
     expect(card1.moveTo).toHaveBeenCalledWith(finalPosition);
@@ -178,6 +179,31 @@ describe('Card specs', function() {
     closureMock.fill.calls.reset();
 
     card1.notify(eventMock);
+    card1.draw(closureMock);
+
+    expect(closureMock.fill).not.toHaveBeenCalledWith(highlightColor);
+  });
+
+  it('switches color when notified of a comparison event referencing itself and clears color upon subsequent notification', function() {
+    const highlightColor = 150;
+    const card1 = new Card();
+
+    const eventMock = {
+      type: 'comparison', detail: {
+        card1: null, card2: card1
+      }
+    };
+
+    const closureMock = getP5ClosureMock();
+    spyOn(closureMock, 'fill')
+    
+    card1.notify(eventMock);
+    card1.draw(closureMock);
+
+    expect(closureMock.fill).toHaveBeenCalledWith(highlightColor);
+    closureMock.fill.calls.reset();
+
+    card1.notify({type: 'comparison', detail: {}});
     card1.draw(closureMock);
 
     expect(closureMock.fill).not.toHaveBeenCalledWith(highlightColor);

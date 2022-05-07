@@ -19,6 +19,7 @@ mergesortBoard.setTitle('MergeSort (in-place)');
 mergesortBoard.setDisplay(new InfoDisplay());
 mergesortDrawing.add(mergesortBoard);
 mergesortDrawing.subscribe(mergesortBoard, 'swap');
+mergesortDrawing.subscribe(mergesortBoard, 'comparison');
 
 const quicksortDrawing = new Drawing();
 const quicksortBoard = new Board(800, 200);
@@ -26,6 +27,7 @@ quicksortBoard.setTitle('QuickSort');
 quicksortBoard.setDisplay(new InfoDisplay());
 quicksortDrawing.add(quicksortBoard);
 quicksortDrawing.subscribe(quicksortBoard, 'swap');
+quicksortDrawing.subscribe(quicksortBoard, 'comparison');
 
 const insertionsortDrawing = new Drawing();
 const insertionsortBoard = new Board(800, 200);
@@ -33,6 +35,7 @@ insertionsortBoard.setTitle('InsertionSort');
 insertionsortBoard.setDisplay(new InfoDisplay());
 insertionsortDrawing.add(insertionsortBoard);
 insertionsortDrawing.subscribe(insertionsortBoard, 'swap');
+insertionsortDrawing.subscribe(insertionsortBoard, 'comparison');
 
 const selectionsortDrawing = new Drawing();
 const selectionsortBoard = new Board(800, 200);
@@ -40,6 +43,7 @@ selectionsortBoard.setTitle('SelectionSort');
 selectionsortBoard.setDisplay(new InfoDisplay());
 selectionsortDrawing.add(selectionsortBoard);
 selectionsortDrawing.subscribe(selectionsortBoard, 'swap');
+selectionsortDrawing.subscribe(selectionsortBoard, 'comparison');
 
 const bubblesortDrawing = new Drawing();
 const bubblesortBoard = new Board(800, 200);
@@ -47,6 +51,7 @@ bubblesortBoard.setTitle('BubbleSort');
 bubblesortBoard.setDisplay(new InfoDisplay());
 bubblesortDrawing.add(bubblesortBoard);
 bubblesortDrawing.subscribe(bubblesortBoard, 'swap');
+bubblesortDrawing.subscribe(bubblesortBoard, 'comparison');
 
 const cardsAttributes = getArrayOfRandomCardAttributes(20);
 
