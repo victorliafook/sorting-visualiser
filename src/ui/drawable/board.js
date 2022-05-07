@@ -57,6 +57,8 @@ const Board = function(width, height) {
 
   const notify = (event) => {
     if (event.type === 'swap') infoDisplay.incrementSwap();
+    if (event.type === 'comparison') infoDisplay.incrementComparison();
+
     cards.forEach(card => card.notify(event));
   };
 

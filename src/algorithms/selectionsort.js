@@ -1,14 +1,15 @@
+const ComparisonEventDecorator = require('./comparatorEventDecorator');
+const RankableComparator = require('./rankableComparator');
+
+const comparator = new ComparisonEventDecorator(new RankableComparator());
+
 function selectionsort(array) {
   for (let i = 0; i < array.length; i++) {
     let min = array[i];
     let minIndex = i;
     
     for (let j = i + 1 ; j < array.length; j++) {
-      if (typeof array[i].getRank !== "function" || typeof array[j].getRank !== "function") {
-        throw new Error("Cant sort not Rankable elements");
-      }
-
-      if (array[j].getRank() < min.getRank()) {
+      if (comparator.compare(min, array[j]) > 0) {
         min = array[j];
         minIndex = j;
       }
@@ -22,6 +23,10 @@ function selectionsort(array) {
     }
   }
 
+  emitEvent(createEvent('comparison', {
+    card1: null, card2: null
+  }));
+
   return array;
 }
 
@@ -32,6 +37,7 @@ const emitEvent = function(event) {
 let eventEmitter;
 const setEventEmitter = function(emitter) {
   eventEmitter = emitter;
+  comparator.setEventEmitter(emitter);
 };
 
 const createEvent = function(type, data) {
@@ -43,6 +49,7 @@ const createEvent = function(type, data) {
 let eventFactory;
 const setEventFactory = function(factory) {
   eventFactory = factory;
+  comparator.setEventFactory(factory);
 }
 
 module.exports = {

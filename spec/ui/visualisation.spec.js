@@ -41,6 +41,8 @@ describe('visualisation tests', function() {
     expect(algorithMock.setEventEmitter).toHaveBeenCalledWith(domElementMock);
 
     expect(domElementMock.addEventListener).toHaveBeenCalledWith('swap', jasmine.anything());
+    expect(domElementMock.addEventListener).toHaveBeenCalledWith('comparison', jasmine.anything());
+    expect(domElementMock.addEventListener).toHaveBeenCalledWith('highlight', jasmine.anything());
   });
 
   it('returns the sketch object when running the Visualisation', function() {

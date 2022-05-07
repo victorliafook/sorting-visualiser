@@ -1,14 +1,16 @@
+const ComparisonEventDecorator = require('./comparatorEventDecorator');
+const RankableComparator = require('./rankableComparator');
+
+const comparator = new ComparisonEventDecorator(new RankableComparator());
+
 const merge = function (array, lStart, rStart, rEnd) {
   if (rStart > rEnd) return array;
 
   while (lStart < rEnd && rStart <= rEnd) {
     let left = array[lStart];
     let right = array[rStart];
-    if (typeof left.getRank !== "function" || typeof right.getRank !== "function") {
-      throw new Error("Cant sort not Rankable elements");
-    }
 
-    if (left.getRank() > right.getRank()) {
+    if (comparator.compare(left, right) > 0) {
       shift(array, lStart, rStart);
       rStart++;
     }
@@ -31,7 +33,13 @@ const shift = function (array, left, right) {
 };
 
 const sort = function (array) {
-  return recursiveSort(array, 0, array.length - 1);
+  const sorted = recursiveSort(array, 0, array.length - 1);
+  emitEvent(createEvent("comparison", {
+    card1: null,
+    card2: null
+  }));
+
+  return sorted;
 };
 
 const recursiveSort = function (array, start, end) {
@@ -51,6 +59,7 @@ const emitEvent = function(event) {
 let eventEmitter;
 const setEventEmitter = function(emitter) {
   eventEmitter = emitter;
+  comparator.setEventEmitter(emitter);
 };
 
 const createEvent = function(type, data) {
@@ -62,6 +71,7 @@ const createEvent = function(type, data) {
 let eventFactory;
 const setEventFactory = function(factory) {
   eventFactory = factory;
+  comparator.setEventFactory(factory);
 }
 
 module.exports = { merge, sort, setEventEmitter, setEventFactory };

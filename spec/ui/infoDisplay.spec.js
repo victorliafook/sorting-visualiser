@@ -60,6 +60,17 @@ describe('infoDisplay specs', function() {
     expect(p5Mock.text).toHaveBeenCalledWith('Swaps: 1', jasmine.anything(), jasmine.anything());
   });
 
+  it('updates the number of comparisons', function() {
+    const info = new InfoDisplay();
+    const p5Mock = getP5ClosureMock();
+    spyOn(p5Mock, 'text');
+
+    info.incrementComparison();
+    info.draw(p5Mock);
+
+    expect(p5Mock.text).toHaveBeenCalledWith('Comparisons: 1', jasmine.anything(), jasmine.anything());
+  });
+
   const getP5ClosureMock = () => {
     return {
       text: () => {},

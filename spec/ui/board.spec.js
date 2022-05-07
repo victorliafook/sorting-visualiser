@@ -130,6 +130,28 @@ describe('Board specs', function() {
     expect(displayMock.setTitle).toHaveBeenCalledWith(title);
   });
 
+  it('increments swaps on its display when notified of a swap', function() {
+    const board = new Board();
+    const displayMock = {incrementSwap: () => {}, setTitle: () => {}};
+    spyOn(displayMock, 'incrementSwap');
+    board.setDisplay(displayMock);
+
+    const swapEventMock = {type: 'swap'};
+    board.notify(swapEventMock);
+    expect(displayMock.incrementSwap).toHaveBeenCalled();
+  });
+
+  it('increments comparisons on its display when notified of a comparison', function() {
+    const board = new Board();
+    const displayMock = {incrementComparison: () => {}, setTitle: () => {}};
+    spyOn(displayMock, 'incrementComparison');
+    board.setDisplay(displayMock);
+
+    const swapEventMock = {type: 'comparison'};
+    board.notify(swapEventMock);
+    expect(displayMock.incrementComparison).toHaveBeenCalled();
+  });
+
   const getP5ClosureMock = () => {
     return {
       createImage: () => {

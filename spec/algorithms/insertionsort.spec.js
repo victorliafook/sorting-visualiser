@@ -5,7 +5,7 @@ const { getRandomTestCases, getEdgeCases } = require("../sortingTests");
 describe('Insertion Sort tests', function() {
   it("throws exception if trying to sort not Rankable elements", function() {
     const invalidArray = [{},1];
-    expect(()=> insertionsort.sort(invalidArray)).toThrowError(Error);
+    expect(()=> insertionsort.sort(invalidArray)).toThrowError(Error, "Attempted to compare not rankable element(s)");
   });
 
   it("sorts ascending - random tests", function() {
@@ -38,7 +38,6 @@ describe('Insertion Sort tests', function() {
     expect(sorted.indexOf(firstOne) < sorted.indexOf(secondOne) && sorted.indexOf(secondOne) < sorted.indexOf(thirdOne)).toBe(true);
   });
 
-
   it("dispatches swap events using an emitter", function() {
     const eventEmitter = {
       dispatchEvent: () => {}
@@ -63,5 +62,31 @@ describe('Insertion Sort tests', function() {
     };
     insertionsort.sort(arr);
     expect(eventEmitter.dispatchEvent).toHaveBeenCalledWith(jasmine.objectContaining(swapEvent));
+  });
+
+  it("dispatches comparison events using an emitter", function() {
+    const eventEmitter = {
+      dispatchEvent: () => {}
+    };
+    const eventFactory = {
+      createEvent: (eventName, data) => {
+        return {type: eventName, detail: {...data}}
+      }
+    };
+    
+    spyOn(eventEmitter, "dispatchEvent");
+
+    insertionsort.setEventEmitter(eventEmitter);
+    insertionsort.setEventFactory(eventFactory);
+
+    const arr = buildArrayOfRankable([2,1]);
+    const comparisonEvent = {
+      type: 'comparison',
+      detail: {
+        card1: arr[0], card2: arr[1]
+      }
+    };
+    insertionsort.sort(arr);
+    expect(eventEmitter.dispatchEvent).toHaveBeenCalledWith(jasmine.objectContaining(comparisonEvent));
   });
 });

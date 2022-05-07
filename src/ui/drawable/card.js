@@ -89,6 +89,7 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
 
   this.notify = (event) => {
     if (event.type === 'swap') handleSwap(event);
+    if (event.type === 'comparison') handleComparison(event);
     if (event.type === 'highlight') handleHighlight(event);
   };
 
@@ -99,6 +100,16 @@ const Card = function(pos, cardWidth = 30, suit, rank) {
       const thisPosition = this.getPosition();
       this.moveTo(card2.getPosition());
       card2.moveTo(thisPosition);
+    }
+  }
+
+  const handleComparison = (event) => {
+    const card1 = event.detail.card1;
+    const card2 = event.detail.card2;
+    if (this === card1 || this === card2) { 
+      highlighted = true;
+    } else {
+      highlighted = false;
     }
   }
 
