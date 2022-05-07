@@ -3,15 +3,18 @@ const InfoDisplay = function() {
   let comparisonCounter = 0;
   let numberOfCards = 0;
   let title = '';
+  const baseHeight = 120;
+  const lineHeight = 15;
 
   const draw = (closure) => {
-    closure.textSize(20);
+    closure.textSize(18);
     closure.textAlign(closure.LEFT);
-    closure.text(title, 10, 140);
-    closure.textSize(15);
-    closure.text(`# of cards: ${numberOfCards}`, 10, 160);
-    closure.text(`Swaps: ${swapCounter}`, 10, 180);
-    closure.text(`Comparisons: ${comparisonCounter}`, 10, 200);
+    closure.text(title, 10, baseHeight);
+    closure.textSize(13);
+    closure.text(`# of cards: ${numberOfCards}`, 10, baseHeight + 1 * lineHeight);
+    closure.text(`Swaps: ${swapCounter}`, 10, baseHeight + 2 * lineHeight);
+    closure.text(`Comparisons: ${comparisonCounter}`, 10, baseHeight + 3 * lineHeight);
+    closure.text(`Total Operations: ${comparisonCounter + swapCounter}`, 10, baseHeight + 4 * lineHeight);
   };
 
   const setTitle = (string) => {
