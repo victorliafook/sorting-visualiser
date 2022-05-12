@@ -33,7 +33,7 @@ const shift = function (array, left, right) {
 };
 
 const sort = function (array) {
-  const sorted = recursiveSort(array, 0, array.length - 1);
+  const sorted = mergeSort(array, 0, array.length - 1);
   emitEvent(createEvent("comparison", {
     card1: null,
     card2: null
@@ -42,12 +42,12 @@ const sort = function (array) {
   return sorted;
 };
 
-const recursiveSort = function (array, start, end) {
+const mergeSort = function (array, start, end) {
   if (start >= end) return array;
 
   let midIndex = Math.floor((end - start) / 2) + start;
-  recursiveSort(array, start, midIndex);
-  recursiveSort(array, midIndex + 1, end);
+  mergeSort(array, start, midIndex);
+  mergeSort(array, midIndex + 1, end);
 
   return merge(array, start, midIndex + 1, end);
 };
@@ -74,4 +74,9 @@ const setEventFactory = function(factory) {
   comparator.setEventFactory(factory);
 }
 
-module.exports = { merge, sort, setEventEmitter, setEventFactory };
+module.exports = {
+  merge,
+  sort,
+  setEventEmitter,
+  setEventFactory
+};

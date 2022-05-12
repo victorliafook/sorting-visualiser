@@ -42,12 +42,18 @@ function quicksort(arr, start = 0, end) {
   quicksort(arr, start, pivot-1);
   quicksort(arr, pivot+1, end);
 
+  return arr;
+}
+
+function sort(arr) {
+  const sorted = quicksort(arr);
+
   emitEvent(createEvent("comparison", {
     card1: null,
     card2: null
   }));
 
-  return arr;
+  return sorted;
 }
 
 const emitEvent = function(event) {
@@ -73,8 +79,8 @@ const setEventFactory = function(factory) {
 }
 
 module.exports = { 
-  sort: quicksort,
-  partition: partition,
+  sort,
+  partition,
   setEventFactory,
   setEventEmitter
 };
