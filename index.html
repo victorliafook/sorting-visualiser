@@ -6,23 +6,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>
             .inner-container { margin: 0 auto; width: 800px }
+            .inner-container .visualisation { margin: 5px 0 0; }
         </style>
     </head>
 
     <body>
         <div class="outer-container">
             <div class="inner-container">
-                <h1>Visualise</h1>
-                <div id="visualiser-area-bubble"></div>
-                <div id="visualiser-area-selection"></div>
-                <div id="visualiser-area-insertion"></div>
-                <div id="visualiser-area-merge"></div>
-                <div id="visualiser-area-quick"></div>
+                <h1>Visualise Sorting Algorithms</h1>
+                <span>Use mouse clicks to see the events - comparisons and swaps. Reload the page for new cards disposition.</span>
+                <div id="visualiser-area-bubble" class="visualisation"></div>
+                <div id="visualiser-area-selection" class="visualisation"></div>
+                <div id="visualiser-area-insertion" class="visualisation"></div>
+                <div id="visualiser-area-merge" class="visualisation"></div>
+                <div id="visualiser-area-quick" class="visualisation"></div>
                 <div>
                     <!-- <label>Input Array</label>
                     <input type="text" id="input-array"/> -->
                 </div>
-                <script src="./dist/bundle.js"></script>
+                <script src="dist/bundle.js"></script>
             </div>
         </div>
     </body>
